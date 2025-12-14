@@ -5,6 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://typescriptlang.org)
 [![Go](https://img.shields.io/badge/Go-1.21+-00ADD8.svg)](https://golang.org)
 [![.NET](https://img.shields.io/badge/.NET-8.0+-512BD4.svg)](https://dotnet.microsoft.com)
+[![Java](https://img.shields.io/badge/Java-11+-ED8B00.svg)](https://openjdk.org)
 
 Alpaca Markets Trading ve Market Data API'leri için çoklu dil desteğine sahip client kütüphanesi.
 
@@ -165,6 +166,34 @@ Console.WriteLine($"AAPL: ${price}");
 var order = await trading.BuyAsync("AAPL", 10);
 ```
 
+### Java
+
+```bash
+cd java
+gradle run
+```
+
+```java
+import com.alpaca.client.*;
+import com.alpaca.client.models.*;
+
+// Initialize client
+AlpacaClient client = new AlpacaClient(apiKey, apiSecret, true);
+TradingApi trading = new TradingApi(client);
+MarketDataApi marketData = new MarketDataApi(client);
+
+// Hesap bilgisi
+Account account = trading.getAccount();
+System.out.println("Buying Power: $" + account.getBuyingPower());
+
+// Fiyat sorgula
+double price = marketData.getCurrentPrice("AAPL");
+System.out.printf("AAPL: $%.2f%n", price);
+
+// Order ver
+Order order = trading.submitOrder(OrderRequest.market("AAPL", "10", "buy"));
+```
+
 
 ## 📚 API Metodları
 
@@ -209,18 +238,21 @@ Tüm dillerde aynı metodlar mevcuttur:
 
 ```
 alpaca-API/
-├── python/              # Python paketi
+├── python/              # Python 3.8+
 │   ├── alpaca_client/   # Ana modül
 │   ├── tests/           # Test dosyaları
 │   └── requirements.txt
-├── typescript/          # TypeScript paketi
+├── typescript/          # TypeScript 5.0+
 │   ├── src/             # Kaynak kodlar
 │   └── package.json
-├── go/                  # Go modülü
+├── go/                  # Go 1.21+
 │   ├── alpaca/          # Ana paket
 │   └── go.mod
-├── csharp/              # .NET kütüphanesi
+├── csharp/              # .NET 8.0+
 │   └── *.cs
+├── java/                # Java 11+
+│   ├── src/             # Kaynak kodlar
+│   └── build.gradle
 ├── .env.example         # Credential template
 ├── LICENSE              # MIT Lisansı
 └── README.md
